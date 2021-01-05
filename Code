@@ -1,0 +1,139 @@
+#include "vex.h"
+#include "vex_controller.h"
+
+
+using namespace vex;
+
+  motor rightMotorA = motor(PORT1, ratio18_1, true);
+  motor leftMotorA = motor(PORT2, ratio18_1, true);
+  motor leftMotorB = motor(PORT4, ratio18_1, true);
+  motor rightMotorB = motor(PORT3, ratio18_1, true);
+
+  void frwd(){
+    // move forward
+    leftMotorA.spin(reverse);
+    leftMotorB.spin(reverse);
+    rightMotorA.spin(reverse);
+    rightMotorB.spin(forward);
+    wait(0.1, seconds);
+    leftMotorA.stop();
+    leftMotorB.stop();
+    rightMotorA.stop();
+    rightMotorB.stop();}
+
+
+  void bkwrd(){
+    // move backward
+    leftMotorA.spin(forward);
+    leftMotorB.spin(forward);
+    rightMotorA.spin(forward);
+    rightMotorB.spin(reverse);
+    wait(0.1, seconds);
+    leftMotorA.stop();
+    leftMotorB.stop();
+    rightMotorA.stop();
+    rightMotorB.stop();}
+
+
+  void rght(){
+    // move to the right
+    leftMotorA.spin(reverse);
+    leftMotorB.spin(forward);
+    rightMotorA.spin(forward);
+    rightMotorB.spin(forward);
+    wait(0.1, seconds);
+    leftMotorA.stop();
+    leftMotorB.stop();
+    rightMotorA.stop();
+    rightMotorB.stop();}
+
+
+  void lft(){
+    // move to the left
+    leftMotorA.spin(forward);
+    leftMotorB.spin(reverse);
+    rightMotorA.spin(reverse);
+    rightMotorB.spin(reverse);
+    wait(0.1, seconds);
+    leftMotorA.stop();
+    leftMotorB.stop();
+    rightMotorA.stop();
+    rightMotorB.stop();}
+
+
+  void spn_rght(){
+    // rotate to the right
+    leftMotorA.spin(reverse);
+    leftMotorB.spin(reverse);
+    rightMotorA.spin(forward);
+    rightMotorB.spin(reverse);
+    wait(0.1, seconds);
+    leftMotorA.stop();
+    leftMotorB.stop();
+    rightMotorA.stop();
+    rightMotorB.stop();}
+
+
+  void spn_lft(){
+    // rotate to the left
+    leftMotorA.spin(forward);
+    leftMotorB.spin(forward);
+    rightMotorA.spin(reverse);
+    rightMotorB.spin(forward);
+    wait(0.1, seconds);
+    leftMotorA.stop();
+    leftMotorB.stop();
+    rightMotorA.stop();
+    rightMotorB.stop();}
+  
+
+  void diag_rght_f(){
+    // diagonal right forward
+
+  }
+
+
+  void diag_rght_b(){
+    // diagonal right backward
+
+  }
+
+  void diag_lft_f(){
+  // diagonal left forward
+
+  }
+
+
+  void diag_lft_b(){
+  // diagonal left backward
+
+  }
+  
+
+
+int main() {
+  // Initializing Robot Configuration. DO NOT REMOVE!
+  vexcodeInit();
+
+  while(true){
+    // forward movement
+    if (Controller1.Axis2.position(percent) > 0){
+      frwd();}
+     else if (Controller1.Axis2.position(percent) < 0){
+      bkwrd();
+    }
+
+    // left/right movement
+    if (Controller1.Axis1.position(percent) > 0){
+      rght();}
+    else if (Controller1.Axis1.position(percent) < 0){
+      lft();}
+
+    // spin commands
+    if (Controller1.Axis4.position(percent) > 0){  // could potentially do a sensitivity thing where the wheel spins faster near the edges
+      spn_rght();} 
+    else if (Controller1.Axis4.position() < 0){
+      spn_lft();}
+
+  }
+}
